@@ -11,10 +11,6 @@ function formatValue (value : number | string | boolean){
     }
 }
 
-// console.log(formatValue('hello'));
-// console.log(formatValue(5));
-// console.log(formatValue(true));
-
 
 function getLength (value: string |any[]){
 
@@ -26,8 +22,7 @@ function getLength (value: string |any[]){
     }
 } 
 
-// console.log(getLength('typescript'));
-// console.log(getLength([10, 20, 30, 40]));
+
 
 class Person {
     name:string;
@@ -43,11 +38,7 @@ class Person {
     } 
 }
 
-// const person1 = new Person('John Doe', 30);
-// console.log(person1.getDetails());
 
-// const person2 = new Person('Alice', 25);
-// console.log(person2.getDetails());
 
 
 type Items={
@@ -57,17 +48,16 @@ type Items={
 
 
 function filterByRating (value:Items[]):Items[]{
-    const sortedItems = value.filter(item => item.rating > 4);
-    return sortedItems;
+    value.forEach(item => {
+        if (item.rating < 0 || item.rating > 5) {
+            console.log(`Invalid rating for "${item.title}". Rating must be between 0 and 5.`);
+        }
+    });
+
+    return value.filter(item => item.rating > 4 && item.rating <= 5);
 } 
 
-// const books = [
-//   { title: 'Book A', rating: 4.5 },
-//   { title: 'Book B', rating: 3.2 },
-//   { title: 'Book C', rating: 5.0 },
-// ];
 
-// console.log(filterByRating(books));
 
 type User={
     id:number;
@@ -82,13 +72,7 @@ function filterActiveUsers (value:User[]):User[]{
     return activeUser;
 }
 
-// const users = [
-//   { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
-//   { id: 2, name: 'Asha', email: 'asha@example.com', isActive: false },
-//   { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
-// ];
 
-// console.log(filterActiveUsers(users));
 
 
 interface Book{
@@ -103,11 +87,73 @@ function printBookDetails(book:Book){
     console.log(  `Title: ${book.title}, Author: ${book.author}, Published: ${book.publishedYear}, Available: ${book.isAvailable ? "Yes" : "No"}`);
 } 
 
-// const myBook: Book = {
-//   title: 'The Great Gatsby',
-//   author: 'F. Scott Fitzgerald',
-//   publishedYear: 1925,
-//   isAvailable: false,
-// };
 
-// printBookDetails(myBook);
+
+type ArrayType = string[] | number[];
+
+function getUniqueValues (a:ArrayType, b:ArrayType){
+
+
+
+    const newArray:ArrayType=[];
+
+    const isPresent =(value:String|Number)=>{
+        let check =false;
+
+        for (let i=0;i<newArray.length;i++){
+            if(newArray[i]===value){
+                check=true;
+            }
+        } 
+
+        if(!check){
+            newArray.push(value);
+        }
+    }
+
+    
+  for (let i = 0; i < a.length; i++) {
+    isPresent(a[i]);
+  }
+    for (let i = 0; i < b.length; i++) {
+        isPresent(b[i]);
+    }
+    return newArray;
+}
+
+
+type Product={
+    name:string;
+    price:number;
+    quantity:number;
+    discount?:number;
+}
+
+
+function calculateTotalPrice(products: Product[]) {
+    if (products.length === 0) {
+        return 0;
+    }
+
+    for (const product of products) {
+        if (product.discount !== undefined) {
+            if (product.discount < 0 || product.discount > 100) {
+                console.log(
+                    `Error: Invalid discount value (${product.discount}) for "${product.name}". Discount must be between 0–100.`
+                );
+
+                return 0;
+            }
+        }
+    }
+
+    return products.reduce((total, product) => {
+        const discount = product.discount ?? 0;
+        const discountedPrice =
+            product.price - (product.price * discount) / 100;
+
+        return total + discountedPrice * product.quantity;
+    }, 0);
+}
+
+
