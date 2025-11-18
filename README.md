@@ -1,4 +1,4 @@
-1. TypeScript-এ Interface এবং Type এর পার্থক্য
+## 1. TypeScript-এ Interface এবং Type এর পার্থক্য
 
 TypeScript-এ interface এবং type দুটোই ব্যবহার করা হয় ডেটার structure বা shape নির্ধারণ করতে। 
 
@@ -19,7 +19,7 @@ interface Student extends Person {
 type Person = { name: string };
 type Student = Person & { roll: number };
 
-2. Declaration Merging
+## 2. Declaration Merging
 
 interface → একাধিকবার declare করলে merge হয়
 type → merge হয় না (error দিবে)
